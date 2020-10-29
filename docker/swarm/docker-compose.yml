@@ -19,7 +19,7 @@ services:
     deploy:
         replicas: 1
         labels:
-            traefik.backend: '${REGISTRY_BACKEND_NAME}'
+            traefik.backend: 'registryui-local'
             traefik.frontend.rule: 'Host: ${LOCAL_DOMAIN}'
             traefik.enable: 'true'
             traefik.port: 80
