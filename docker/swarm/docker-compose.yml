@@ -1,0 +1,26 @@
+version: '3.7'
+
+networks:
+  default:
+    external: true
+    name: lb-common
+
+services:
+  registry-web:
+    image: joxit/docker-registry-ui:static
+    environment:
+        - DELETE_IMAGES=true
+        - REGISTRY_TITLE=${REGISTRY_DOMAIN}
+        - REGISTRY_URL=${REGISTRY_DOMAIN}
+    networks:
+      default: 
+        aliases: 
+          - ${LOCAL_DOMAIN}
+    deploy:
+        replicas: 1
+        labels:
+            traefik.backend: '${REGISTRY_BACKEND_NAME}'
+            traefik.frontend.rule: 'Host: ${LOCAL_DOMAIN}'
+            traefik.enable: 'true'
+            traefik.port: 80
+
